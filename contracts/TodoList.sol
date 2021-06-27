@@ -17,6 +17,11 @@ contract TodoList {
         bool isCompleted
     );
 
+    event TaskCompleted(
+        uint id,
+        bool isCompleted
+    );
+
     constructor() {
         createTask("Have a 2hr studying session about BlockChain :)");
     }
@@ -27,4 +32,10 @@ contract TodoList {
         emit TaskCreated(taskCount, _content, false);
     }
 
+    function toggleCompleted(uint _id) public {
+        Task memory _task = tasks[_id];
+        _task.isCompleted = !_task.isCompleted;
+        tasks[_id] = _task;
+        emit TaskCompleted(_id, _task.isCompleted);
+    }
 }
